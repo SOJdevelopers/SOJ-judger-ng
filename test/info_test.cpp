@@ -1,12 +1,18 @@
-#include "../config.h"
+#include "../info.h"
 #include <iostream>
 
 int main() {
 	using namespace SOJ_JUDGER_NAMESPACE;
-	Config conf;
-	conf.loadFromFile("problem.conf");
-	std::cout << "DEBUG: " << conf["subtask"]["dependence"]["2"]["1"].getDouble() << std::endl;
-	conf["subtask"]["dependence"]["2"]["2"].set(998244353.123);
-	std::cout << conf << std::endl;
-	return 0;
+	{
+	PointInfo t(1, 2, 3, 4, "5", "6", "7", "8");
+	std::cout << t.getStatus() << '\n';
+	t.setStatus("123");
+	std::cout << t.getStatus() << '\n';
+	}
+	{
+	CustomTestInfo t(1, 2, "3", "4", "5");
+	std::cout << t.getStatus() << '\n';
+	t.setStatus("123");
+	std::cout << t.getStatus() << '\n';
+	}
 }
