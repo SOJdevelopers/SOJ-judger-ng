@@ -1,52 +1,166 @@
-#ifndef _SOJ_JUDGER_DEF_HEADER_
-#define _SOJ_JUDGER_DEF_HEADER_
+#ifndef _SOJ_JUDGER_RESULT_HEADER_
+#define _SOJ_JUDGER_RESULT_HEADER_
 
 #include "env.h"
+#include "utility.h"
+#include <cstdio>
+#include <cmath>
+#include <cassert>
+#include <cstring>
 
 namespace SOJ_JUDGER_NAMESPACE {
-	class RunResult {
+
+	const int RS_SPJ = 0x0010;
+	const int RS_HACK = 0x0020;
+	const int RS_AC = 0;
+	const int RS_WA = 1;
+	const int RS_RE = 2;
+	const int RS_MLE = 3;
+	const int RS_TLE = 4;
+	const int RS_OLE = 5;
+	const int RS_DGS = 6;
+	const int RS_JGF = 7;
+
+#define SOJ_CURRENT_CLASS Result
+	class Result {
 	private:
-		int ust, usm;
-		int time;     // time limit (millisecond) (strict)
-		int realtime; // time limit (millisecond)
-		int memory;   // memory limit (KiB)
-		int output;   // output limit (KiB)
+		int type, ust, usm;
 	public:
-		RunLimit() :
-			time(0), realtime(0), memory(0), output(0) { }
-		explicit RunLimit(int _t, int _m, int _o) :
-			time(_t), realtime(0), memory(_m), output(_o) { }
-		explicit RunLimit(int _t, int _rt, int _m, int _o) :
-			time(_t), realtime(_rt), memory(_m), output(_o) { }
-		RunLimit & setTime(int x) { time = x; return *this; }
-
-		_SOJ_GETSET(time, Time)
-
-#define _SOJ_GETSET(a, b) \
-			decltype(a) get##b() { return a; } \
-			_SOJ_CURRENT_CLASS & set##b(decltype(a) x) { a = x; return *this; }
-
-		int getTime() { return time; }
-		RunLimit & setRealtime(int x) { realtime = x; return *this; }
-		int getRealtime() { return realtime; }
-		RunLimit & setMemory(int x) { memory = x; return *this; }
-		int getMemory() { return memory; }
-		RunLimit & setOutput(int x) { output = x; return *this; }
-		int getOutput() { return output; }
-		const static RunLimit DEFAULT   ;
-		const static RunLimit JUDGER    ;
-		const static RunLimit CHECKER   ;
-		const static RunLimit INTERACTOR;
-		const static RunLimit VALIDATOR ;
-		const static RunLimit MARKER    ;
-		const static RunLimit COMPILER  ;
+		SOJ_GETSET(type, Type);
+		SOJ_GETSET(ust, UsedTime);
+		SOJ_GETSET(usm, UsedMemory);
+		virtual void failedResult() {
+			setType(RS_JGF);
+			setUsedTime(-1);
+			setUsedMemory(-1);
+		}
+		virtual bool loadFromFile(const String &) = 0;
 	} ;
-	const RunLimit RunLimit::DEFAULT    = RunLimit(1000, 1 << 18, 1 << 16);
-	const RunLimit RunLimit::JUDGER     = RunLimit(600000, 1 << 20, 1 << 17);
-	const RunLimit RunLimit::CHECKER    = RunLimit(5000, 1 << 18, 1 << 16);
-	const RunLimit RunLimit::INTERACTOR = RunLimit(5000, 1 << 18, 1 << 16);
-	const RunLimit RunLimit::VALIDATOR  = RunLimit(5000, 1 << 18, 1 << 16);
-	const RunLimit RunLimit::MARKER     = RunLimit(5000, 1 << 18, 1 << 16);
-	const RunLimit RunLimit::COMPILER   = RunLimit(15000, 1 << 19, 1 << 16);
+#undef SOJ_CURRENT_CLASS
+
+#define SOJ_CURRENT_CLASS RunResult
+	class RunResult : public Result {
+	private:
+		int exitcode;
+	public:
+		SOJ_GETSET(exitcode, ExitCode);
+
+		virtual void failedResult() {
+			Result::failedResult();
+			setExitCode(-1);
+		}
+
+		virtual bool loadFromFile(const String & filename) {
+			FILE * fres = fopen(filename.c_str(), "r");
+			if (fres != NULL) {
+				int t, ut, um, e;
+				int cnt = fscanf(fres, "%d%d%d%d", &t, &ut, &um, &e);
+				if (cnt == 4) {
+					fclose(fres);
+					setType(t);
+					setUsedTime(ut);
+					setUsedMemory(um);
+					setExitCode(e);
+					return true;
+				}
+			}
+			failedResult();
+			return false;
+		}
+	} ;
+#undef SOJ_CURRENT_CLASS
+
+#define SOJ_CURRENT_CLASS RunCheckerResult
+	class RunCheckerResult : public RunResult {
+	private:
+		int scr;
+		String info;
+	public:
+		SOJ_GETSET(scr, Score);
+		SOJ_GETSET(info, Info);
+
+		virtual void failedResult() {
+			RunResult::failedResult();
+			setScore(0);
+			setInfo(IS_JUDGER_JGF);
+		}
+		virtual bool loadFromFile(const String & filename) {
+			if (getType() != RS_AC) {
+				setScore(0);
+			} else {
+				FILE * fres = fopen(filename.c_str(), "r");
+				static char type[21];
+				if (fres == NULL || fscanf(fres, "%20s", type) != 1) {
+					failedResult();
+					return false;
+				}
+				if (strcmp(type, "ok") == 0) {
+					setScore(100);
+				} else if (strcmp(type, "points") == 0) {
+					double d;
+					if (fscanf(fres, "%lf", &d) != 1) {
+						failedResult();
+						return false;
+					} else {
+						setScore((int) floor(100 * d + 0.5));
+					}
+				} else {
+					setScore(0);
+				}
+				fclose(fres);
+			}
+			setInfo(filePreview(filename, 256));
+			return true;
+		}
+	} ;
+#undef SOJ_CURRENT_CLASS
+
+#define SOJ_CURRENT_CLASS RunValidatorResult
+	class RunValidatorResult : public RunResult {
+	private:
+		bool succeeded;
+		String info;
+	public:
+		SOJ_GETSET(succeeded, Succeeded);
+		SOJ_GETSET(info, Info);
+
+		virtual bool loadFromFile(const String & filename) {
+			fprintf(stderr, "???\n");
+			assert(0);
+		}
+		virtual void failedResult() {
+			RunResult::failedResult();
+			setSucceeded(0);
+			setInfo(IS_VAL_JGF);
+		}
+	} ;
+#undef SOJ_CURRENT_CLASS
+
+/*
+	struct RunCompilerResult {
+		int type;
+		double ust; int usm;
+		bool succeeded;
+		String info;
+
+		static RunCompilerResult failed_result() {
+			RunCompilerResult res;
+			res.type = RS_JGF;
+			res.ust = -1;
+			res.usm = -1;
+			res.succeeded = false;
+			res.info = "Compile Failed";
+			return res;
+		}
+	};
+
+	// see also: run_simple_interaction
+	struct RunSimpleInteractionResult {
+		RunResult res;
+		RunCheckerResult ires;
+	};
+	*/
+
 }
+
 #endif

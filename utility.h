@@ -4,13 +4,15 @@
 #include "env.h"
 #include <cstdio>
 #include <cstdlib>
+#include <cstdarg>
+#include "linux/limits.h"
 
 namespace SOJ_JUDGER_NAMESPACE {
 	String escapeShellArg(const String & arg) {
 		String res = "'";
-		for (size_t i = 0; i < (int) arg.size(); ++i) {
+		for (size_t i = 0; i < arg.size(); ++i) {
 			if (arg[i] == '\'') {
-				res += R"'\''";
+				res += "'\''";
 			} else {
 				res += arg[i];
 			}
@@ -21,7 +23,7 @@ namespace SOJ_JUDGER_NAMESPACE {
 
 	String realpath(const String & path) {
 		static char real[PATH_MAX + 1];
-		if (realpath(path.c_str(), real) == NULL) {
+		if (::realpath(path.c_str(), real) == NULL) {
 			return "";
 		}
 		return real;

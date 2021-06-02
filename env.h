@@ -3,11 +3,11 @@
 #include <string>
 
 #define SOJ_JUDGER_NAMESPACE sj
-#define UOJ_DATA_PATH UOJ_WORK_PATH "/data"
-#define UOJ_RESULT_PATH UOJ_WORK_PATH "/result"
-#define _SOJ_GETSET(a, b) \
+#define SOJ_DATA_PATH SOJ_WORK_PATH "/data"
+#define SOJ_RESULT_PATH SOJ_WORK_PATH "/result"
+#define SOJ_GETSET(a, b) \
 	decltype(a) get##b() { return a; } \
-	_SOJ_CURRENT_CLASS & set##b(decltype(a) x) { a = x; return *this; }
+	SOJ_CURRENT_CLASS & set##b(decltype(a) x) { a = x; return *this; }
 
 namespace SOJ_JUDGER_NAMESPACE {
 	typedef std::string String;
@@ -25,6 +25,8 @@ namespace SOJ_JUDGER_NAMESPACE {
 	const String IS_RS_DGS              = "Dangerous Syscalls";
 	const String IS_RS_JGF              = "Judgement Failed";
 	const String IS_RS_UKE              = "Unknown Result";
+	const String IS_JUDGER_JGF          = "Checker Judgement Failed";
+	const String IS_VAL_JGF             = "Validator Judgement Failed";
 
 }
 #endif
