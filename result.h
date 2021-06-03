@@ -136,30 +136,31 @@ namespace SOJ_JUDGER_NAMESPACE {
 	} ;
 #undef SOJ_CURRENT_CLASS
 
-/*
-	struct RunCompilerResult {
-		int type;
-		double ust; int usm;
+#define SOJ_CURRENT_CLASS RunCompilerResult
+	class RunCompilerResult : public RunResult {
+	private:
 		bool succeeded;
 		String info;
+	public:
+		SOJ_GETSET(succeeded, Succeeded);
+		SOJ_GETSET(info, Info);
 
-		static RunCompilerResult failed_result() {
-			RunCompilerResult res;
-			res.type = RS_JGF;
-			res.ust = -1;
-			res.usm = -1;
-			res.succeeded = false;
-			res.info = "Compile Failed";
-			return res;
+		virtual bool loadFromFile(const String & filename) {
+			fprintf(stderr, "???\n");
+			assert(0);
 		}
-	};
+		virtual void failedResult() {
+			RunResult::failedResult();
+			setSucceeded(0);
+			setInfo(IS_COMP_FAILED);
+		}
+	} ;
+#undef SOJ_CURRENT_CLASS
 
-	// see also: run_simple_interaction
 	struct RunSimpleInteractionResult {
 		RunResult res;
 		RunCheckerResult ires;
-	};
-	*/
+	} ;
 
 }
 

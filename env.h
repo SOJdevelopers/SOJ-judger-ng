@@ -27,6 +27,7 @@ namespace SOJ_JUDGER_NAMESPACE {
 	const String IS_RS_UKE              = "Unknown Result";
 	const String IS_JUDGER_JGF          = "Checker Judgement Failed";
 	const String IS_VAL_JGF             = "Validator Judgement Failed";
+	const String IS_COMP_FAILED         = "Compile Failed";
 
 }
 #endif

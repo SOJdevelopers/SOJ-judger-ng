@@ -34,7 +34,7 @@ namespace SOJ_JUDGER_NAMESPACE {
 	}
 
 	int executef(const char *fmt, ...) {
-		const int MaxL = 512;
+		const int MaxL = 16384;
 		static char cmd[MaxL];
 		va_list ap;
 		va_start(ap, fmt);
@@ -64,6 +64,7 @@ namespace SOJ_JUDGER_NAMESPACE {
 		fclose(f);
 		return res;
 	}
+
 	void fileHideToken(const String & name, const String & token) {
 		executef("cp %s %s.bak", name.c_str(), name.c_str());
 
