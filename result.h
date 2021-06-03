@@ -73,7 +73,7 @@ namespace SOJ_JUDGER_NAMESPACE {
 #define SOJ_CURRENT_CLASS RunCheckerResult
 	class RunCheckerResult : public RunResult {
 	private:
-		int scr;
+		double scr;
 		String info;
 	public:
 		SOJ_GETSET(scr, Score);
@@ -102,7 +102,7 @@ namespace SOJ_JUDGER_NAMESPACE {
 						failedResult();
 						return false;
 					} else {
-						setScore((int) floor(100 * d + 0.5));
+						setScore(d);
 					}
 				} else {
 					setScore(0);
