@@ -6,7 +6,7 @@
 #define SOJ_DATA_PATH SOJ_WORK_PATH "/data"
 #define SOJ_RESULT_PATH SOJ_WORK_PATH "/result"
 #define SOJ_GETSET(a, b) \
-	decltype(a) get##b() { return a; } \
+	decltype(a) get##b() const { return a; } \
 	SOJ_CURRENT_CLASS & set##b(decltype(a) x) { a = x; return *this; }
 
 namespace SOJ_JUDGER_NAMESPACE {
