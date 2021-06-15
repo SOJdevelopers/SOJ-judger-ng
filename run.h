@@ -2,8 +2,10 @@
 #define _SOJ_JUDGER_RUN_HEADER_
 
 #include "env.h"
+#include "result.h"
 #include "limit.h"
 #include <cstdarg>
+#include <vector>
 
 namespace SOJ_JUDGER_NAMESPACE {
 #define SOJ_CURRENT_CLASS RunConfig
@@ -52,8 +54,8 @@ namespace SOJ_JUDGER_NAMESPACE {
 		}
 
 		RunConfig & setLimit(const RunLimit &limit) {
-			timeLimit = limit.time, realTimeLimit = limit.realtime;
-			memoryLimit = limit.memory, outputLimit = limit.output;
+			timeLimit = limit.getTime(), realTimeLimit = limit.getRealtime(),
+			memoryLimit = limit.getMemory(), outputLimit = limit.getOutput();
 		}
 
 		SOJ_GETSET(inputFileName, InputFileName);
@@ -70,6 +72,9 @@ namespace SOJ_JUDGER_NAMESPACE {
 		SOJ_GETSET(needShowTraceDetails, NeedShowTraceDetails);
 		SOJ_GETSET(argv, Argv);
 
+		RunConfig & addReadable(const String &name) {return extraReadableFiles.emplace_back(name), *this;}
+		RunConfig & addWritable(const String &name) {return extraWritableFiles.emplace_back(name), *this;}
+
 		RunConfig & setNameWithArgv(const String &name, ...) {
 			argv.clear();
 			argv.emplace_back(name);
@@ -79,6 +84,7 @@ namespace SOJ_JUDGER_NAMESPACE {
 				argv.emplace_back(arg);
 			}
 			va_end(vl);
+			return *this;
 		}
 
 		String toString() const {
@@ -103,6 +109,10 @@ namespace SOJ_JUDGER_NAMESPACE {
 			for (const String &arg : argv)
 				ret += ' ' + escapeShellArg(arg);
 			return ret;
+		}
+
+		RunResult run() const {
+			
 		}
 	};
 	#undef SOJ_CURRENT_CLASS
