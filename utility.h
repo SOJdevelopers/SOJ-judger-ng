@@ -47,6 +47,10 @@ namespace SOJ_JUDGER_NAMESPACE {
 		return res;
 	}
 
+	int copyFile(String lhs, String rhs) {
+		return executef("cp %s %s 2>/dev/null", lhs.c_str(), rhs.c_str());
+	}
+
 	String filePreview(const String & name, const size_t len = 128) {
 		FILE * f = fopen(name.c_str(), "r");
 		if (f == NULL) {
@@ -101,6 +105,10 @@ namespace SOJ_JUDGER_NAMESPACE {
 			}
 		}
 		return r;
+	}
+
+	double scaleScore(double point_score, double task_score) {
+		return point_score * task_score;
 	}
 
 }
