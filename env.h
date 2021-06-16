@@ -2,6 +2,7 @@
 #define _SOJ_JUDGER_ENV_HEADER_
 #include <string>
 
+#include "soj_work_path.h"
 #define SOJ_JUDGER_NAMESPACE sj
 #define SOJ_DATA_PATH SOJ_WORK_PATH "/data"
 #define SOJ_RESULT_PATH SOJ_WORK_PATH "/result"

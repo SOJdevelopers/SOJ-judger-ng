@@ -22,7 +22,9 @@ INTERACTOR	limit.h	/^		const static RunLimit INTERACTOR;$/;"	m	class:SOJ_JUDGER_
 INTERACTOR	limit.h	/^	const RunLimit RunLimit::INTERACTOR = RunLimit(5000, 1 << 18, 1 << 16);$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:const RunLimit
 IS_ACCEPTABLE	env.h	/^	const String IS_ACCEPTABLE          = "Acceptable Answer";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_ACCEPTED	env.h	/^	const String IS_ACCEPTED            = "Accepted";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
+IS_COMP_FAILED	env.h	/^	const String IS_COMP_FAILED         = "Compile Failed";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_DEFAULT	env.h	/^	const String IS_DEFAULT             = "default";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
+IS_JUDGER_JGF	env.h	/^	const String IS_JUDGER_JGF          = "Checker Judgement Failed";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_RS_DGS	env.h	/^	const String IS_RS_DGS              = "Dangerous Syscalls";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_RS_JGF	env.h	/^	const String IS_RS_JGF              = "Judgement Failed";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_RS_MLE	env.h	/^	const String IS_RS_MLE              = "Memory Limit Exceeded";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
@@ -31,44 +33,56 @@ IS_RS_RE	env.h	/^	const String IS_RS_RE               = "Runtime Error";$/;"	v	n
 IS_RS_TLE	env.h	/^	const String IS_RS_TLE              = "Time Limit Exceeded";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_RS_UKE	env.h	/^	const String IS_RS_UKE              = "Unknown Result";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_UNAUTHORIZED_OUTPUT	env.h	/^	const String IS_UNAUTHORIZED_OUTPUT = "Unauthorized output";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
+IS_VAL_JGF	env.h	/^	const String IS_VAL_JGF             = "Validator Judgement Failed";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 IS_WRONGANSWER	env.h	/^	const String IS_WRONGANSWER         = "Wrong Answer";$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const String
 JUDGER	limit.h	/^		const static RunLimit JUDGER    ;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:const RunLimit
 JUDGER	limit.h	/^	const RunLimit RunLimit::JUDGER     = RunLimit(600000, 1 << 20, 1 << 17);$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:const RunLimit
+Judger	judger.h	/^	class Judger {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
 MARKER	limit.h	/^		const static RunLimit MARKER    ;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:const RunLimit
 MARKER	limit.h	/^	const RunLimit RunLimit::MARKER     = RunLimit(5000, 1 << 18, 1 << 16);$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:const RunLimit
 PointInfo	info.h	/^		PointInfo(int n, int sc, int ut, int um,$/;"	f	class:SOJ_JUDGER_NAMESPACE::PointInfo
 PointInfo	info.h	/^	class PointInfo {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
 RS_AC	result.h	/^	const int RS_AC = 0;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 RS_DGS	result.h	/^	const int RS_DGS = 6;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
-RS_HACK	result.h	/^	const int RS_HACK = 0x0f00;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
+RS_HACK	result.h	/^	const int RS_HACK = 0x0020;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 RS_JGF	result.h	/^	const int RS_JGF = 7;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 RS_MLE	result.h	/^	const int RS_MLE = 3;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 RS_OLE	result.h	/^	const int RS_OLE = 5;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 RS_RE	result.h	/^	const int RS_RE = 2;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
-RS_SPJ	result.h	/^	const int RS_SPJ = 0x00f0;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
+RS_SPJ	result.h	/^	const int RS_SPJ = 0x0010;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 RS_TLE	result.h	/^	const int RS_TLE = 4;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 RS_WA	result.h	/^	const int RS_WA = 1;$/;"	v	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:const int
 Result	config.h	/^			Result() { key = ""; }$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result
 Result	config.h	/^			Result(String k, std::map<String, String> * c) :$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result
 Result	config.h	/^		class Result {$/;"	c	class:SOJ_JUDGER_NAMESPACE::Config
 Result	result.h	/^	class Result {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
-RunCheckerResult	result.h	/^	class RunCheckerResult {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
+RunCheckerResult	result.h	/^	class RunCheckerResult : public RunResult {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
+RunCompilerResult	result.h	/^	class RunCompilerResult : public RunResult {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
+RunConfig	run.h	/^		RunConfig () {initConfig();}$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunConfig
+RunConfig	run.h	/^		RunConfig (const String &res, const String &in, const String &out,$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunConfig
+RunConfig	run.h	/^	class RunConfig {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
 RunLimit	limit.h	/^		RunLimit() :$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunLimit
 RunLimit	limit.h	/^		explicit RunLimit(int _t, int _m, int _o) :$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunLimit
 RunLimit	limit.h	/^		explicit RunLimit(int _t, int _rt, int _m, int _o) :$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunLimit
 RunLimit	limit.h	/^	class RunLimit {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
-RunResult	result.h	/^	class RunResult : private Result {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
+RunResult	result.h	/^	class RunResult : public Result {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
+RunSimpleInteractionResult	result.h	/^	struct RunSimpleInteractionResult {$/;"	s	namespace:SOJ_JUDGER_NAMESPACE
+RunValidatorResult	result.h	/^	class RunValidatorResult : public RunResult {$/;"	c	namespace:SOJ_JUDGER_NAMESPACE
 SOJ_CURRENT_CLASS	info.h	/^#define SOJ_CURRENT_CLASS /;"	d
+SOJ_CURRENT_CLASS	judger.h	/^#define SOJ_CURRENT_CLASS /;"	d
 SOJ_CURRENT_CLASS	limit.h	/^#define SOJ_CURRENT_CLASS /;"	d
 SOJ_CURRENT_CLASS	result.h	/^#define SOJ_CURRENT_CLASS /;"	d
+SOJ_CURRENT_CLASS	run.h	/^#define SOJ_CURRENT_CLASS /;"	d
 SOJ_DATA_PATH	env.h	/^#define SOJ_DATA_PATH /;"	d
 SOJ_GETSET	env.h	/^#define SOJ_GETSET(/;"	d
 SOJ_JUDGER_NAMESPACE	config.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
 SOJ_JUDGER_NAMESPACE	env.h	/^#define SOJ_JUDGER_NAMESPACE /;"	d
 SOJ_JUDGER_NAMESPACE	env.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
 SOJ_JUDGER_NAMESPACE	info.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
+SOJ_JUDGER_NAMESPACE	judger.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
 SOJ_JUDGER_NAMESPACE	limit.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
 SOJ_JUDGER_NAMESPACE	result.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
+SOJ_JUDGER_NAMESPACE	run.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
 SOJ_JUDGER_NAMESPACE	utility.h	/^namespace SOJ_JUDGER_NAMESPACE {$/;"	n
 SOJ_RESULT_PATH	env.h	/^#define SOJ_RESULT_PATH /;"	d
 String	env.h	/^	typedef std::string String;$/;"	t	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:std::string
@@ -76,32 +90,65 @@ VALIDATOR	limit.h	/^		const static RunLimit VALIDATOR ;$/;"	m	class:SOJ_JUDGER_N
 VALIDATOR	limit.h	/^	const RunLimit RunLimit::VALIDATOR  = RunLimit(5000, 1 << 18, 1 << 16);$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:const RunLimit
 _SOJ_JUDGER_CONFIG_H_	config.h	/^#define _SOJ_JUDGER_CONFIG_H_$/;"	d
 _SOJ_JUDGER_ENV_HEADER_	env.h	/^#define _SOJ_JUDGER_ENV_HEADER_$/;"	d
+_SOJ_JUDGER_HEADER_	judger.h	/^#define _SOJ_JUDGER_HEADER_$/;"	d
 _SOJ_JUDGER_INFO_HEADER_	info.h	/^#define _SOJ_JUDGER_INFO_HEADER_$/;"	d
 _SOJ_JUDGER_LIMIT_HEADER_	limit.h	/^#define _SOJ_JUDGER_LIMIT_HEADER_$/;"	d
 _SOJ_JUDGER_RESULT_HEADER_	result.h	/^#define _SOJ_JUDGER_RESULT_HEADER_$/;"	d
+_SOJ_JUDGER_RUN_HEADER_	run.h	/^#define _SOJ_JUDGER_RUN_HEADER_$/;"	d
 _SOJ_JUDGER_UTILITY_HEADER_	utility.h	/^#define _SOJ_JUDGER_UTILITY_HEADER_$/;"	d
+allowProc	run.h	/^		bool allowProc;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:bool
+argv	run.h	/^		std::vector <String> argv;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:std::vector<String>
 autoComplete	info.h	/^		void autoComplete() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:void
 conf	config.h	/^			std::map<String, String> * conf;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:std::map<String,String> *
 config	config.h	/^		std::map<String, String> config;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Config	typeref:typename:std::map<String,String>
+config	judger.h	/^		Config config;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:Config
+copyFile	utility.h	/^	int copyFile(String lhs, String rhs) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:int
+data_path	judger.h	/^		String main_path, work_path, data_path, result_path;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:String
+details	judger.h	/^		String details;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:String
+errorFileName	run.h	/^		String errorFileName;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:String
 escapeShellArg	utility.h	/^	String escapeShellArg(const String & arg) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:String
+execute	utility.h	/^	int execute(const char * cmd) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:int
+executef	utility.h	/^	int executef(const char *fmt, ...) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:int
 exitcode	result.h	/^		int exitcode;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunResult	typeref:typename:int
 extra	info.h	/^		String status, extra, out;$/;"	m	class:SOJ_JUDGER_NAMESPACE::CustomTestInfo	typeref:typename:String
+extraReadableFiles	run.h	/^		std::vector <String> extraReadableFiles;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:std::vector<String>
+extraWritableFiles	run.h	/^		std::vector <String> extraWritableFiles;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:std::vector<String>
+failedResult	result.h	/^		virtual void failedResult() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Result	typeref:typename:void
 failedResult	result.h	/^		virtual void failedResult() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunCheckerResult	typeref:typename:void
+failedResult	result.h	/^		virtual void failedResult() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunCompilerResult	typeref:typename:void
 failedResult	result.h	/^		virtual void failedResult() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunResult	typeref:typename:void
+failedResult	result.h	/^		virtual void failedResult() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunValidatorResult	typeref:typename:void
+fileHideToken	utility.h	/^	void fileHideToken(const String & name, const String & token) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:void
+filePreview	utility.h	/^	String filePreview(const String & name, const size_t len = 128) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:String
 get	config.h	/^			String get(const String & val = "") {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:String
 getDouble	config.h	/^			double getDouble(double val = 0.0) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:double
 getInt	config.h	/^			int getInt(int val = 0) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:int
+getLimit	run.h	/^		RunLimit getLimit() const {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:RunLimit
+htmlSpecialChars	utility.h	/^	inline String htmlSpecialChars(const String & s) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:String
 in	info.h	/^		String status, in, out, res;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:String
-info	result.h	/^		string info;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunCheckerResult	typeref:typename:string
+info	result.h	/^		String info;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunCheckerResult	typeref:typename:String
+info	result.h	/^		String info;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunCompilerResult	typeref:typename:String
+info	result.h	/^		String info;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunValidatorResult	typeref:typename:String
+init	judger.h	/^		void init(int argc, char * argv[], bool ismain = false) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:void
+initConfig	run.h	/^		void initConfig() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:void
+inputFileName	run.h	/^		String inputFileName;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:String
+ires	result.h	/^		RunCheckerResult ires;$/;"	m	struct:SOJ_JUDGER_NAMESPACE::RunSimpleInteractionResult	typeref:typename:RunCheckerResult
+judge	judger.h	/^		virtual void judge() {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:void
 key	config.h	/^			String key;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:String
 loadFromFile	config.h	/^		void loadFromFile(const String & filename) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config	typeref:typename:void
-loadFromFile	result.h	/^		virtual bool loadFromFile(const String & file_name) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunResult	typeref:typename:bool
-loadFromFile	result.h	/^		virtual void loadFromFile(const string &file_name, const RunResult &rres) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunCheckerResult	typeref:typename:void
+loadFromFile	result.h	/^		virtual bool loadFromFile(const String & filename) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunCheckerResult	typeref:typename:bool
+loadFromFile	result.h	/^		virtual bool loadFromFile(const String & filename) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunCompilerResult	typeref:typename:bool
+loadFromFile	result.h	/^		virtual bool loadFromFile(const String & filename) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunResult	typeref:typename:bool
+loadFromFile	result.h	/^		virtual bool loadFromFile(const String & filename) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunValidatorResult	typeref:typename:bool
 main	test/config_test.cpp	/^int main() {$/;"	f	typeref:typename:int
 main	test/info_test.cpp	/^int main() {$/;"	f	typeref:typename:int
 main	test/limit_test.cpp	/^int main() {$/;"	f	typeref:typename:int
 main	test/result_test.cpp	/^int main() {$/;"	f	typeref:typename:int
+main_path	judger.h	/^		String main_path, work_path, data_path, result_path;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:String
+max_memory	judger.h	/^		int tot_time, max_memory, tot_score;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:int
 memory	limit.h	/^		int memory;   \/\/ memory limit (KiB)$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:int
+memoryLimit	run.h	/^		int memoryLimit;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:int
+needShowTraceDetails	run.h	/^		bool needShowTraceDetails;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:bool
 num	info.h	/^		int num, scr, ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:int
 operator <<	config.h	/^		friend std::ostream & operator << (std::ostream & out, Config & conf) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:std::ostream &
 operator [] 	config.h	/^			Result operator [] (String num) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:Result
@@ -110,16 +157,35 @@ operator [] 	config.h	/^		Result operator [] (const String & key) {$/;"	f	class:
 out	info.h	/^		String status, extra, out;$/;"	m	class:SOJ_JUDGER_NAMESPACE::CustomTestInfo	typeref:typename:String
 out	info.h	/^		String status, in, out, res;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:String
 output	limit.h	/^		int output;   \/\/ output limit (KiB)$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:int
+outputFileName	run.h	/^		String outputFileName;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:String
+outputLimit	run.h	/^		int outputLimit;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:int
+problemID	judger.h	/^		int problemID;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:int
+realTimeLimit	run.h	/^		int realTimeLimit;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:int
+realpath	utility.h	/^	String realpath(const String & path) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:String
 realtime	limit.h	/^		int realtime; \/\/ time limit (millisecond)$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:int
 res	info.h	/^		String status, in, out, res;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:String
+res	result.h	/^		RunResult res;$/;"	m	struct:SOJ_JUDGER_NAMESPACE::RunSimpleInteractionResult	typeref:typename:RunResult
+resultFileName	run.h	/^		String resultFileName;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:String
+result_path	judger.h	/^		String main_path, work_path, data_path, result_path;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:String
+safeMode	run.h	/^		bool safeMode;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:bool
+scaleScore	utility.h	/^	double scaleScore(double point_score, double task_score) {$/;"	f	namespace:SOJ_JUDGER_NAMESPACE	typeref:typename:double
 scr	info.h	/^		int num, scr, ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:int
-scr	result.h	/^		int scr;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunCheckerResult	typeref:typename:int
+scr	result.h	/^		double scr;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunCheckerResult	typeref:typename:double
 set	config.h	/^			Result & set(const String & val) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:Result &
 set	config.h	/^			Result & set(double val) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:Result &
 set	config.h	/^			Result & set(int val) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::Config::Result	typeref:typename:Result &
+setLimit	run.h	/^		RunConfig & setLimit(const RunLimit &limit) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:RunConfig &
+setNameWithArgv	run.h	/^		RunConfig & setNameWithArgv(const String &name, ...) {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:RunConfig &
+stackLimit	run.h	/^		int stackLimit;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:int
 status	info.h	/^		String status, extra, out;$/;"	m	class:SOJ_JUDGER_NAMESPACE::CustomTestInfo	typeref:typename:String
 status	info.h	/^		String status, in, out, res;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:String
+succeeded	result.h	/^		bool succeeded;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunCompilerResult	typeref:typename:bool
+succeeded	result.h	/^		bool succeeded;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunValidatorResult	typeref:typename:bool
 time	limit.h	/^		int time;     \/\/ time limit (millisecond) (strict)$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunLimit	typeref:typename:int
+timeLimit	run.h	/^		int timeLimit;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:int
+toString	run.h	/^		String toString() const {$/;"	f	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:String
+tot_score	judger.h	/^		int tot_time, max_memory, tot_score;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:int
+tot_time	judger.h	/^		int tot_time, max_memory, tot_score;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:int
 type	result.h	/^		int type, ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Result	typeref:typename:int
 usm	info.h	/^		int num, scr, ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:int
 usm	info.h	/^		int ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::CustomTestInfo	typeref:typename:int
@@ -127,3 +193,5 @@ usm	result.h	/^		int type, ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Result	ty
 ust	info.h	/^		int num, scr, ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::PointInfo	typeref:typename:int
 ust	info.h	/^		int ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::CustomTestInfo	typeref:typename:int
 ust	result.h	/^		int type, ust, usm;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Result	typeref:typename:int
+workPath	run.h	/^		String workPath;$/;"	m	class:SOJ_JUDGER_NAMESPACE::RunConfig	typeref:typename:String
+work_path	judger.h	/^		String main_path, work_path, data_path, result_path;$/;"	m	class:SOJ_JUDGER_NAMESPACE::Judger	typeref:typename:String

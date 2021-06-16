@@ -35,21 +35,21 @@ namespace SOJ_JUDGER_NAMESPACE {
 			if (ismain) {
 				copyFile(data_path + "/require/*", work_path);
 
-				if (config["use_builtin_judger"] == "on") {
+				if (config["use_builtin_judger"].get() == "on") {
 					auto pt = SOJ_WORK_PATH "/builtin/judger/judger";
 					config["judger"].set(pt);
 				} else {
 					config["judger"].set(data_path + "/judger");
 				}
 			} else {
-				if (config.count("use_builtin_checker")) {
+				if (config["use_builtin_checker"].get().size()) {
 					auto pt = main_path + "/builtin/checker/";
-					pt += config["use_builtin_checker"];
-					config["checker"] = pt;
+					pt += config["use_builtin_checker"].get();
+					config["checker"].set(pt);
 				} else {
-					config["checker"] = data_path + "/chk";
+					config["checker"].set(data_path + "/chk");
 				}
-				config["validator"] = data_path + "/val";
+				config["validator"].set(data_path + "/val");
 			}
 		}
 
