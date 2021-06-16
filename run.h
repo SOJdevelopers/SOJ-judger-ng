@@ -27,19 +27,16 @@ namespace SOJ_JUDGER_NAMESPACE {
 		bool safeMode;
 		bool needShowTraceDetails;
 		std::vector <String> argv;
-
-		void initConfig() {
-			timeLimit = realTimeLimit = memoryLimit = outputLimit = stackLimit = 0,
-			inputFileName = outputFileName = errorFileName = resultFileName = "/dev/null",
-			workPath = "", allowProc = needShowTraceDetails = false, safeMode = true;
-		}
 	public:
-		RunConfig () {initConfig();}
+		RunConfig () { RunConfig(RunLimit::DEFAULT); }
+
+		RunConfig (const RunLimit &limit) { RunConfig("/dev/null", "/dev/null", "/dev/null", "/dev/null", limit, {}); }
 
 		RunConfig (const String &res, const String &in, const String &out,
 					const String &err, const RunLimit &limit, const std::vector <String> &arg) :
 					stackLimit(0), inputFileName(in), outputFileName(out),
-					errorFileName(err), resultFileName(res), argv(arg) {
+					errorFileName(err), resultFileName(res), argv(arg),
+					allowProc(false), safeMode(true), needShowTraceDetails(false) {
 			setLimit(limit);
 		}
 
@@ -111,10 +108,78 @@ namespace SOJ_JUDGER_NAMESPACE {
 			return ret;
 		}
 
-		RunResult run() const {
-			
+		void run(RunResult &result) const {
+			String cmd = <run_program_path> + ' ' + toString();
+			if (execute(cmd)) {
+				result.failedResult();
+			} else {
+				result.loadFromFile(resultFileName);
+			}
 		}
 	};
-	#undef SOJ_CURRENT_CLASS
+#undef SOJ_CURRENT_CLASS
+
+#define SOJ_CURRENT_CLASS RunWithInfoConfig
+	class RunWithInfoConfig : public RunConfig {
+	private:
+	public:
+		RunWithInfoConfig () { RunWithInfoConfig(RunLimit::DEFAULT); }
+
+		RunWithInfoConfig (const RunLimit &limit) { RunConfig(limit); }
+
+		void run(RunResult &result) {
+			setErrorFileName(<name0>);
+			RunConfig.run(result);
+			result.loadFromFile(<name0>);
+		}
+	}
+#undef SOJ_CURRENT_CLASS
+
+#define SOJ_CURRENT_CLASS RunCheckerConfig
+	class RunCheckerConfig : public RunWithInfoConfig {
+	private:
+	public:
+		RunCheckerConfig () { RunCheckerConfig(RunLimit::CHECKER); }
+
+		RunCheckerConfig (const RunLimit &limit) { RunWithInfoConfig(limit); }
+
+		RunCheckerConfig & setupTestlib(String input, String output, String answer) {
+			addReadable(input).addReadable(output).addReadable(answer);
+			setArgv({input, output, answer});
+			return *this;
+		}
+
+		void run(RunCheckerResult &result) { RunWithInfoConfig.run(result); }
+	}
 }
+#undef SOJ_CURRENT_CLASS
+
+#define SOJ_CURRENT_CLASS RunValidatorConfig
+	class RunValidatorConfig : public RunWithInfoConfig {
+	private:
+	public:
+		RunValidatorConfig () { RunValidatorConfig(RunLimit::VALIDATOR); }
+
+		RunValidatorConfig (const RunLimit &limit) { RunWithInfoConfig(limit); }
+
+		RunValidatorConfig & setupTestlib(String input) {
+			setInputFileName(input);
+			return *this;
+		}
+
+		void run(RunValidatorResult &result) { RunWithInfoConfig.run(result); }
+	}
+}
+#undef SOJ_CURRENT_CLASS
+
+	class RunCompilerConfig : public RunWithInfoConfig {
+	private:
+	
+	public:
+		RunCompilerConfig () { RunCompilerConfig(RunLimit::COMPILER); }
+
+		RunCompilerConfig (const RunLimit &limit) { RunWithInfoConfig(limit); }
+
+		void run(RunCompilerResult &result) { RunWithInfoConfig.run(result); }
+	}
 #endif

@@ -111,6 +111,19 @@ namespace SOJ_JUDGER_NAMESPACE {
 		return point_score * task_score;
 	}
 
+	String resultTypeToString(int type) {
+		switch (type) {
+			case RS_AC : return IS_ACCEPTED;
+			case RS_WA : return IS_WRONGANSWER;
+			case RS_RE : return IS_RS_RE;
+			case RS_MLE: return IS_RS_MLE;
+			case RS_TLE: return IS_RS_TLE;
+			case RS_OLE: return IS_RS_OLE;
+			case RS_DGS: return IS_RS_DGS;
+			case RS_JGF: return IS_RS_JGF;
+			default    : return IS_RS_UKE;
+		}
+	}
 }
 
 #endif

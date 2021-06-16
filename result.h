@@ -125,8 +125,10 @@ namespace SOJ_JUDGER_NAMESPACE {
 		SOJ_GETSET(info, Info);
 
 		virtual bool loadFromFile(const String & filename) {
-			fprintf(stderr, "???\n");
-			assert(0);
+			succeeded = (getType() == RS_AC && getExitCode() == 0);
+			if (!succeeded) {
+				info = filePreview(filename, 256);
+			}
 		}
 		virtual void failedResult() {
 			RunResult::failedResult();
@@ -146,8 +148,20 @@ namespace SOJ_JUDGER_NAMESPACE {
 		SOJ_GETSET(info, Info);
 
 		virtual bool loadFromFile(const String & filename) {
-			fprintf(stderr, "???\n");
-			assert(0);
+			succeeded = (getType() == RS_AC && getExitCode() == 0);
+			if (!succeeded) {
+				switch (getType()) {
+					case RS_AC:
+						res.info = filePreview(filename, 4096);
+						break;
+					case RS_JGF:
+						res.info = "No Comment";
+						break;
+					default:
+						res.info = "Compiler " + resultTypeToString(getType());
+						break;
+				}
+			}
 		}
 		virtual void failedResult() {
 			RunResult::failedResult();
